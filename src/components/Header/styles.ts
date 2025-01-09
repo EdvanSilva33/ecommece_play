@@ -5,11 +5,12 @@ export const HeaderBar = styled.header`
   background-color: ${cores.cinza};
   padding: 24px;
   border-radius: 16px;
-  margin-botton: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 16px 0;
+  margin: 16px auto;
+  width: 100%;
+  max-width: 1200px;
 
   a {
     color: ${cores.branca};
@@ -32,13 +33,13 @@ export const Links = styled.ul`
 
 export const LinkItem = styled.li`
   margin-right: 16px;
-  list-style:none;
-  img {
+  list-style: none;
 `
 
 export const LinkCart = styled.a`
   display: flex;
-  
+
+  img {
     margin-left: 16px;
   }
 `
