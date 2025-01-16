@@ -55,7 +55,7 @@ const Footer = () => (
           </li>
         </Links>
       </FooterSection>
-      <p>{currentYear}copy; WarGame Todos direitos reservados</p>
+      <p>{currentYear} &copy; WarGame Todos direitos reservados</p>
     </div>
   </ContainerFooter>
 )
