@@ -1,4 +1,4 @@
-import Game from '../../components/models/Game'
+import Game from '../../models/Game'
 import ProductsList from '../../components/ProductsList'
 import resident from '../../assets/images/resident.png'
 import diablo from '../../assets/images/diablo.png'
