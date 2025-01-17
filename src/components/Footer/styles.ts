@@ -5,6 +5,9 @@ export const ContainerFooter = styled.footer`
   background-color: ${cores.cinza};
   padding: 32px 0;
   font-size: 12px;
+  p {
+    text-align: center;
+  }
 `
 export const SectionTitle = styled.h4`
   color: ${cores.branca};
