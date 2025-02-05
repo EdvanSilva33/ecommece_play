@@ -11,7 +11,7 @@ import play from '../../assets/images/botao_play.png'
 import Section from '../Section'
 import { useState } from 'react'
 
-type GalleryItem = {
+interface GalleryItem {
   type: 'image' | 'video'
   url: string
 }
@@ -39,9 +39,16 @@ type Props = {
   name: string
 }
 
+interface ModalState extends GalleryItem {
+  isVisible: boolean
+}
+
 const Gallery = ({ defaultCover, name }: Props) => {
-  const [modalEstaAberto, setModalEstaAberto] = useState(false)
-  const [modalUrl, setModalUrl] = useState('')
+  const [modal, setModal] = useState<ModalState>({
+    isVisible: false,
+    type: 'image',
+    url: ''
+  })
 
   const getMediaCover = (item: GalleryItem) => {
     if (item.type === 'image') return item.url
@@ -52,6 +59,14 @@ const Gallery = ({ defaultCover, name }: Props) => {
     if (item.type === 'image') return zoom
     return play
   }
+  const closeModal = () => {
+    setModal({
+      isVisible: false,
+      type: 'image',
+      url: ''
+    })
+  }
+
   return (
     <>
       <Section title="Galeria" background="black">
@@ -60,33 +75,57 @@ const Gallery = ({ defaultCover, name }: Props) => {
             <S.Item
               key={media.url}
               onClick={() => {
-                setModalEstaAberto(true)
-                setModalUrl(media.url)
+                setModal({
+                  isVisible: true,
+                  type: media.type,
+                  url: media.url
+                })
               }}
             >
               <img
                 src={getMediaCover(media)}
-                alt={`midia ${index + 1} de ${name}`}
+                alt={`media ${index + 1} de ${name}`}
               />
               <S.Action>
                 <img
                   src={getMediaIcon(media)}
-                  alt="Clique para visualiza midias"
+                  alt="Clique para visualiza medias"
                 />
               </S.Action>
             </S.Item>
           ))}
         </S.Items>
       </Section>
-      <S.Modal className={modalEstaAberto ? 'visivel' : ''}>
+      <S.Modal className={modal.isVisible ? 'visivel' : ''}>
         <S.ModalContent className="container">
           <header>
             <h4>{name}</h4>
-            <img src={fechar} onClick={() => setModalEstaAberto(false)} />
+            <img
+              src={fechar}
+              alt="Icone fechar"
+              onClick={() => {
+                closeModal()
+              }}
+            />
           </header>
-          <img src={modalUrl} alt="" />
+          {modal.type === 'image' ? (
+            <img src={modal.url} alt="image" />
+          ) : (
+            <iframe
+              src={encodeURI(modal.url)}
+              title="YouTube video"
+              frameBorder={0}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          )}
         </S.ModalContent>
-        <div className="overlay"></div>
+        <div
+          className="overlay"
+          onClick={() => {
+            closeModal()
+          }}
+        ></div>
       </S.Modal>
     </>
   )
